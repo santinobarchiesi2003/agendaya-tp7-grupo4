@@ -10,3 +10,6 @@ docs/enunciado/
 cypress/screenshots/
 cypress/videos/
 coverage/
+
+# Paquete que genera `npm run build`
+dist/

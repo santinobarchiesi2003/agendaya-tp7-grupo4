@@ -4,19 +4,26 @@
   "private": true,
   "description": "AgendaYA - TP N7 Plan de desarrollo y mantenimiento (Ingenieria y Calidad de Software - UTN FRM, Grupo 4)",
   "main": "server/server.js",
+  "files": [
+    "server/",
+    "src/",
+    "frontend/"
+  ],
   "scripts": {
     "start": "node server/server.js",
     "reset": "node server/reset-db.js",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
+    "build": "node scripts/build.js",
     "test:unit": "jest --verbose",
     "test:coverage": "jest --coverage",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "test:e2e": "start-server-and-test start http://localhost:3000 cy:run",
     "test:e2e:open": "start-server-and-test start http://localhost:3000 cy:open",
-    "test": "npm run test:unit && npm run test:e2e"
+    "test": "npm run test:unit && npm run test:e2e",
+    "verificar": "npm run format:check && npm run lint && npm run test:unit && npm run build"
   },
   "dependencies": {
     "express": "^4.19.2"

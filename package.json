@@ -1,12 +1,14 @@
 {
-  "name": "agendaya-tp6-grupo4",
+  "name": "agendaya-tp7-grupo4",
   "version": "1.0.0",
   "private": true,
-  "description": "AgendaYA - TP N6 Testing automatizado (Ingenieria y Calidad de Software - UTN FRM, Grupo 4)",
+  "description": "AgendaYA - TP N7 Plan de desarrollo y mantenimiento (Ingenieria y Calidad de Software - UTN FRM, Grupo 4)",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
     "reset": "node server/reset-db.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test:unit": "jest --verbose",
     "test:coverage": "jest --coverage",
     "cy:open": "cypress open",
@@ -21,6 +23,7 @@
   "devDependencies": {
     "cypress": "^13.17.0",
     "jest": "^29.7.0",
+    "prettier": "^3.9.9",
     "start-server-and-test": "^3.0.12"
   },
   "jest": {

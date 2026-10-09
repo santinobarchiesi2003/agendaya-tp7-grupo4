@@ -1,0 +1,8 @@
+# Generados o ajenos al codigo fuente
+package-lock.json
+coverage/
+dist/
+data/
+docs/
+cypress/screenshots/
+cypress/videos/

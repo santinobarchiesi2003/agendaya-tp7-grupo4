@@ -1,0 +1,8 @@
+# Finales de linea LF en todas las plataformas. Prettier los exige y, sin esto,
+# Git para Windows convierte los archivos a CRLF al clonar y el control de
+# formato falla en la maquina del desarrollador aunque pase en el pipeline.
+* text=auto eol=lf
+
+*.png binary
+*.docx binary
+*.pdf binary

@@ -1,0 +1,102 @@
+# Pipeline de integracion continua de AgendaYA (TP N7, Grupo 4).
+#
+# Corre ante cada Pull Request hacia main o hacia develop. Los hotfix tambien
+# entran por ahi: la rama hotfix/* nace de main y vuelve por PR a main y despues
+# a develop (ver el plan de desarrollo y mantenimiento), asi que ningun cambio
+# llega a produccion sin pasar por estas verificaciones.
+#
+# Los dos jobs son checks obligatorios en la proteccion de main y de develop:
+# el boton de merge queda bloqueado hasta que ambos terminan bien.
+name: CI
+
+on:
+  pull_request:
+    branches: [main, develop]
+  # Tambien sobre el resultado del merge: de aca sale el paquete que se despliega
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verificaciones:
+    name: Formato, linter, tests unitarios y build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      # Este job no abre un navegador: se saltea la descarga del binario de Cypress
+      CYPRESS_INSTALL_BINARY: 0
+    steps:
+      - name: Descargar el codigo
+        uses: actions/checkout@v6
+
+      - name: Preparar Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        id: dependencias
+        run: npm ci
+
+      # Las cuatro verificaciones corren aunque falle una anterior, para que una
+      # sola ejecucion muestre todo lo que hay que corregir.
+      - name: Formato (Prettier)
+        if: ${{ !cancelled() && steps.dependencias.outcome == 'success' }}
+        run: npm run format:check
+
+      - name: Linter (ESLint)
+        if: ${{ !cancelled() && steps.dependencias.outcome == 'success' }}
+        run: npm run lint
+
+      - name: Tests unitarios (Jest)
+        if: ${{ !cancelled() && steps.dependencias.outcome == 'success' }}
+        run: npm run test:unit
+
+      - name: Build (paquete de la aplicacion)
+        id: build
+        if: ${{ !cancelled() && steps.dependencias.outcome == 'success' }}
+        run: npm run build
+
+      - name: Guardar el paquete generado
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: paquete-agendaya
+          path: dist/*.tgz
+          if-no-files-found: error
+          retention-days: 30
+
+  e2e:
+    name: Tests E2E (Cypress)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Descargar el codigo
+        uses: actions/checkout@v6
+
+      - name: Preparar Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias y el binario de Cypress
+        run: npm ci
+
+      - name: Tests E2E (levanta el servidor y corre Cypress)
+        run: npm run test:e2e
+
+      - name: Guardar capturas y videos de Cypress
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: evidencia-cypress
+          path: |
+            cypress/screenshots
+            cypress/videos
+          if-no-files-found: ignore
+          retention-days: 30

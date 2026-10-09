@@ -61,7 +61,7 @@ const CLAVE_SESION = "agendaya:usuario";
 function guardarSesion(usuario) {
   try {
     sessionStorage.setItem(CLAVE_SESION, JSON.stringify(usuario));
-  } catch (e) {
+  } catch {
     /* sin almacenamiento disponible no hay sesion persistente */
   }
 }
@@ -70,7 +70,7 @@ function leerSesion() {
   try {
     const crudo = sessionStorage.getItem(CLAVE_SESION);
     return crudo ? JSON.parse(crudo) : null;
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -78,7 +78,7 @@ function leerSesion() {
 function cerrarSesion() {
   try {
     sessionStorage.removeItem(CLAVE_SESION);
-  } catch (e) {
+  } catch {
     /* nada que limpiar */
   }
   window.location.href = "/?sesion=cerrada";

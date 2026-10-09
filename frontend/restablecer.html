@@ -1,77 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nueva contraseña — AgendaYA</title>
-<link rel="stylesheet" href="estilos.css">
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nueva contraseña — AgendaYA</title>
+    <link rel="stylesheet" href="estilos.css" />
+  </head>
+  <body>
+    <header class="barra">
+      <div class="marca">Agenda<span>YA</span></div>
+      <nav><a href="/" data-cy="nav-ingresar">Ingresar</a></nav>
+    </header>
 
-<header class="barra">
-  <div class="marca">Agenda<span>YA</span></div>
-  <nav><a href="/" data-cy="nav-ingresar">Ingresar</a></nav>
-</header>
+    <main class="hoja">
+      <h1>Elegí una contraseña nueva</h1>
+      <p class="bajada">Vas a usarla la próxima vez que ingreses.</p>
 
-<main class="hoja">
-  <h1>Elegí una contraseña nueva</h1>
-  <p class="bajada">Vas a usarla la próxima vez que ingreses.</p>
+      <div class="aviso mal" data-cy="alerta-error" role="alert" hidden></div>
+      <div class="aviso ok" data-cy="alerta-exito" role="status" hidden></div>
 
-  <div class="aviso mal" data-cy="alerta-error" role="alert" hidden></div>
-  <div class="aviso ok" data-cy="alerta-exito" role="status" hidden></div>
+      <form data-cy="restablecer-form" novalidate>
+        <div class="campo" data-campo="password">
+          <label for="password">Contraseña nueva</label>
+          <input type="password" id="password" data-cy="password-input" autocomplete="new-password" />
+          <p class="ayuda">Mínimo 8 caracteres, con al menos una mayúscula, una minúscula y un número.</p>
+          <p class="detalle-error" data-cy="error-password"></p>
+        </div>
 
-  <form data-cy="restablecer-form" novalidate>
-    <div class="campo" data-campo="password">
-      <label for="password">Contraseña nueva</label>
-      <input type="password" id="password" data-cy="password-input" autocomplete="new-password">
-      <p class="ayuda">Mínimo 8 caracteres, con al menos una mayúscula, una minúscula y un número.</p>
-      <p class="detalle-error" data-cy="error-password"></p>
-    </div>
+        <button type="submit" id="botonGuardar" data-cy="restablecer-button" class="ancho-total">
+          Guardar contraseña
+        </button>
+      </form>
+    </main>
 
-    <button type="submit" id="botonGuardar" data-cy="restablecer-button" class="ancho-total">Guardar contraseña</button>
-  </form>
-</main>
+    <script src="logica/validaciones.js"></script>
+    <script src="comun.js"></script>
+    <script>
+      const token = new URLSearchParams(window.location.search).get("token") || "";
+      const boton = document.getElementById("botonGuardar");
 
-<script src="logica/validaciones.js"></script>
-<script src="comun.js"></script>
-<script>
-const token = new URLSearchParams(window.location.search).get("token") || "";
-const boton = document.getElementById("botonGuardar");
+      if (!token) {
+        mostrarError("Abrí el enlace que te enviamos por correo.");
+        boton.disabled = true;
+      }
 
-if (!token) {
-  mostrarError("Abrí el enlace que te enviamos por correo.");
-  boton.disabled = true;
-}
+      document.querySelector('[data-cy="restablecer-form"]').addEventListener("submit", async (e) => {
+        e.preventDefault();
+        limpiarErrores();
+        ocultarAvisos();
 
-document.querySelector('[data-cy="restablecer-form"]').addEventListener("submit", async (e) => {
-  e.preventDefault();
-  limpiarErrores();
-  ocultarAvisos();
+        const password = document.getElementById("password").value;
+        const evaluacion = AgendaValidaciones.evaluarPassword(password);
+        if (!evaluacion.valida) {
+          marcarError("password", "La contrasena no es segura. " + evaluacion.errores.join(" "));
+          return;
+        }
 
-  const password = document.getElementById("password").value;
-  const evaluacion = AgendaValidaciones.evaluarPassword(password);
-  if (!evaluacion.valida) {
-    marcarError("password", "La contrasena no es segura. " + evaluacion.errores.join(" "));
-    return;
-  }
+        boton.disabled = true;
+        boton.textContent = "Guardando...";
 
-  boton.disabled = true;
-  boton.textContent = "Guardando...";
+        const { ok, datos } = await pedir("/api/restablecer", { token, password });
 
-  const { ok, datos } = await pedir("/api/restablecer", { token, password });
+        if (ok) {
+          mostrarExito(datos.mensaje);
+          boton.textContent = "Contraseña guardada";
+          return;
+        }
 
-  if (ok) {
-    mostrarExito(datos.mensaje);
-    boton.textContent = "Contraseña guardada";
-    return;
-  }
-
-  mostrarError(datos.mensaje);
-  if (datos.campo) marcarError(datos.campo, datos.mensaje);
-  boton.disabled = false;
-  boton.textContent = "Guardar contraseña";
-});
-</script>
-
-</body>
+        mostrarError(datos.mensaje);
+        if (datos.campo) marcarError(datos.campo, datos.mensaje);
+        boton.disabled = false;
+        boton.textContent = "Guardar contraseña";
+      });
+    </script>
+  </body>
 </html>

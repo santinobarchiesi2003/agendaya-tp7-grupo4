@@ -21,11 +21,18 @@ function registrar(destinatario, asunto, cuerpo) {
   const bloque =
     "\n" +
     "==================================================\n" +
-    "Fecha:  " + marca + "\n" +
-    "Para:   " + destinatario + "\n" +
-    "Asunto: " + asunto + "\n" +
+    "Fecha:  " +
+    marca +
+    "\n" +
+    "Para:   " +
+    destinatario +
+    "\n" +
+    "Asunto: " +
+    asunto +
+    "\n" +
     "--------------------------------------------------\n" +
-    cuerpo + "\n" +
+    cuerpo +
+    "\n" +
     "==================================================\n";
 
   fs.appendFileSync(BITACORA, bloque, "utf8");
@@ -45,7 +52,8 @@ function enviarEnlaceRecuperacion(email, token) {
     "Restablece tu contrasena de AgendaYa",
     "Recibimos un pedido para restablecer tu contrasena.\n" +
       "Abri este enlace para elegir una nueva:\n" +
-      enlace + "\n\n" +
+      enlace +
+      "\n\n" +
       "El enlace vence en 30 minutos.\n" +
       "Si no pediste el cambio, ignora este mensaje."
   );
@@ -55,10 +63,18 @@ function enviarConfirmacionReserva(reserva) {
   registrar(
     reserva.email,
     "Tu reserva en AgendaYa quedo confirmada",
-    "Hola " + reserva.nombre + ",\n\n" +
+    "Hola " +
+      reserva.nombre +
+      ",\n\n" +
       "Tu reserva quedo confirmada.\n" +
-      "  Turno:   " + reserva.fecha + " " + reserva.hora + " h\n" +
-      "  Codigo:  #" + reserva.id + "\n\n" +
+      "  Turno:   " +
+      reserva.fecha +
+      " " +
+      reserva.hora +
+      " h\n" +
+      "  Codigo:  #" +
+      reserva.id +
+      "\n\n" +
       "Si necesitas cancelarla, responde este correo."
   );
 }
@@ -68,13 +84,32 @@ function notificarAdministrador(reserva) {
     ADMIN,
     "Nueva reserva: " + reserva.fecha + " " + reserva.hora,
     "Se registro una nueva reserva.\n" +
-      "  Invitado: " + reserva.nombre + "\n" +
-      "  Correo:   " + reserva.email + "\n" +
-      "  Telefono: " + (reserva.telefono || "no informado") + "\n" +
-      "  Turno:    " + reserva.fecha + " " + reserva.hora + " h\n" +
-      "  Nota:     " + (reserva.nota || "sin nota") + "\n" +
-      "  Codigo:   #" + reserva.id
+      "  Invitado: " +
+      reserva.nombre +
+      "\n" +
+      "  Correo:   " +
+      reserva.email +
+      "\n" +
+      "  Telefono: " +
+      (reserva.telefono || "no informado") +
+      "\n" +
+      "  Turno:    " +
+      reserva.fecha +
+      " " +
+      reserva.hora +
+      " h\n" +
+      "  Nota:     " +
+      (reserva.nota || "sin nota") +
+      "\n" +
+      "  Codigo:   #" +
+      reserva.id
   );
 }
 
-module.exports = { BITACORA, ADMIN, enviarEnlaceRecuperacion, enviarConfirmacionReserva, notificarAdministrador };
+module.exports = {
+  BITACORA,
+  ADMIN,
+  enviarEnlaceRecuperacion,
+  enviarConfirmacionReserva,
+  notificarAdministrador,
+};

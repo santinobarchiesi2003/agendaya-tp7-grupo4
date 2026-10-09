@@ -25,7 +25,9 @@ describe("AgendaYA - M01 Autenticacion: login y logout", () => {
 
     // Assert (2): vuelve al login con confirmacion y el panel queda protegido
     cy.location("pathname").should("eq", "/");
-    cy.get('[data-cy="alerta-exito"]').should("be.visible").and("have.text", "Cerraste sesión correctamente.");
+    cy.get('[data-cy="alerta-exito"]')
+      .should("be.visible")
+      .and("have.text", "Cerraste sesión correctamente.");
     cy.visit("/dashboard.html");
     cy.location("pathname").should("eq", "/");
   });

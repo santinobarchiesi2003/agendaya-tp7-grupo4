@@ -7,8 +7,10 @@ export function proximoDiaHabil(desde = new Date()) {
   const d = new Date(desde.getFullYear(), desde.getMonth(), desde.getDate() + 1);
   while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1);
   return (
-    d.getFullYear() + "-" +
-    String(d.getMonth() + 1).padStart(2, "0") + "-" +
+    d.getFullYear() +
+    "-" +
+    String(d.getMonth() + 1).padStart(2, "0") +
+    "-" +
     String(d.getDate()).padStart(2, "0")
   );
 }
@@ -18,8 +20,10 @@ export function proximoSabado(desde = new Date()) {
   const d = new Date(desde.getFullYear(), desde.getMonth(), desde.getDate() + 1);
   while (d.getDay() !== 6) d.setDate(d.getDate() + 1);
   return (
-    d.getFullYear() + "-" +
-    String(d.getMonth() + 1).padStart(2, "0") + "-" +
+    d.getFullYear() +
+    "-" +
+    String(d.getMonth() + 1).padStart(2, "0") +
+    "-" +
     String(d.getDate()).padStart(2, "0")
   );
 }

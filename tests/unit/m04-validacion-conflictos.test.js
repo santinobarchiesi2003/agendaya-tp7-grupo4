@@ -78,7 +78,10 @@ describe("evaluarReserva (regla completa que aplica el servidor)", () => {
 
   it("rechaza con 409 un turno ocupado y acepta (null) uno libre", () => {
     const ocupado = [{ fecha: "2026-10-13", hora: "10:00", email: "otro@ejemplo.com", estado: "Confirmada" }];
-    expect(evaluarReserva(solicitud, ocupado, ahora)).toMatchObject({ codigo: 409, mensaje: MENSAJES.ocupado });
+    expect(evaluarReserva(solicitud, ocupado, ahora)).toMatchObject({
+      codigo: 409,
+      mensaje: MENSAJES.ocupado,
+    });
     expect(evaluarReserva(solicitud, [], ahora)).toBeNull();
   });
 });

@@ -78,8 +78,10 @@
   /** Fecha local de un Date en formato AAAA-MM-DD (para el minimo del calendario). */
   function fechaIso(fecha) {
     return (
-      fecha.getFullYear() + "-" +
-      String(fecha.getMonth() + 1).padStart(2, "0") + "-" +
+      fecha.getFullYear() +
+      "-" +
+      String(fecha.getMonth() + 1).padStart(2, "0") +
+      "-" +
       String(fecha.getDate()).padStart(2, "0")
     );
   }

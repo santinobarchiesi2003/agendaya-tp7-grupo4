@@ -10,7 +10,9 @@
   --sans: "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -21,7 +23,9 @@ body {
   line-height: 1.5;
 }
 
-a { color: var(--acento); }
+a {
+  color: var(--acento);
+}
 
 /* ---------------------------------------------------------------- estructura */
 
@@ -40,10 +44,16 @@ a { color: var(--acento); }
   letter-spacing: -0.01em;
 }
 
-.marca span { color: var(--acento); }
+.marca span {
+  color: var(--acento);
+}
 
-.barra nav { font-size: 14px; }
-.barra nav a { margin-left: 18px; }
+.barra nav {
+  font-size: 14px;
+}
+.barra nav a {
+  margin-left: 18px;
+}
 
 .hoja {
   max-width: 460px;
@@ -51,7 +61,9 @@ a { color: var(--acento); }
   padding: 0 24px;
 }
 
-.ancha { max-width: 900px; }
+.ancha {
+  max-width: 900px;
+}
 
 h1 {
   font-family: var(--serif);
@@ -69,7 +81,9 @@ h1 {
 
 /* -------------------------------------------------------------- formularios */
 
-.campo { margin-bottom: 20px; }
+.campo {
+  margin-bottom: 20px;
+}
 
 .campo label {
   display: block;
@@ -95,15 +109,28 @@ h1 {
   border-color: var(--acento);
 }
 
-.campo textarea { min-height: 84px; resize: vertical; }
+.campo textarea {
+  min-height: 84px;
+  resize: vertical;
+}
 
-.ayuda { color: var(--gris); font-size: 13px; margin: 6px 0 0; }
+.ayuda {
+  color: var(--gris);
+  font-size: 13px;
+  margin: 6px 0 0;
+}
 
-.opcional { color: var(--gris); font-size: 13px; }
+.opcional {
+  color: var(--gris);
+  font-size: 13px;
+}
 
 /* estado de error: se resalta el campo y se explica que falta (CP-008) */
 .campo.error input,
-.campo.error textarea { border-color: var(--alerta); background: #fdf6f5; }
+.campo.error textarea {
+  border-color: var(--alerta);
+  background: #fdf6f5;
+}
 
 .campo .detalle-error {
   display: none;
@@ -112,7 +139,9 @@ h1 {
   margin-top: 6px;
 }
 
-.campo.error .detalle-error { display: block; }
+.campo.error .detalle-error {
+  display: block;
+}
 
 /* ------------------------------------------------------------------ botones */
 
@@ -126,9 +155,15 @@ button {
   cursor: pointer;
 }
 
-button:hover:not(:disabled) { background: #22304a; border-color: #22304a; }
+button:hover:not(:disabled) {
+  background: #22304a;
+  border-color: #22304a;
+}
 
-button:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+button:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
 
 /* CP-009: al procesarse, el boton queda inutilizable y lo comunica */
 button:disabled {
@@ -138,7 +173,9 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.ancho-total { width: 100%; }
+.ancho-total {
+  width: 100%;
+}
 
 /* boton con aspecto de enlace (cerrar sesion en la barra) */
 button.enlace {
@@ -151,7 +188,9 @@ button.enlace {
   font-size: 14px;
 }
 
-button.enlace:hover:not(:disabled) { background: none; }
+button.enlace:hover:not(:disabled) {
+  background: none;
+}
 
 .pie-formulario {
   margin-top: 24px;
@@ -170,10 +209,20 @@ button.enlace:hover:not(:disabled) { background: none; }
   border-left: 3px solid;
 }
 
-[hidden] { display: none !important; }
+[hidden] {
+  display: none !important;
+}
 
-.aviso.ok { background: #eef4f1; border-color: var(--acento); color: #14442f; }
-.aviso.mal { background: #fbf0ee; border-color: var(--alerta); color: #7d271e; }
+.aviso.ok {
+  background: #eef4f1;
+  border-color: var(--acento);
+  color: #14442f;
+}
+.aviso.mal {
+  background: #fbf0ee;
+  border-color: var(--alerta);
+  color: #7d271e;
+}
 
 /* ------------------------------------------------------------------ horarios */
 
@@ -184,7 +233,9 @@ button.enlace:hover:not(:disabled) { background: none; }
   align-items: start;
 }
 
-.agenda { border-top: 1px solid var(--borde); }
+.agenda {
+  border-top: 1px solid var(--borde);
+}
 
 .franja {
   display: block;
@@ -201,7 +252,9 @@ button.enlace:hover:not(:disabled) { background: none; }
   cursor: pointer;
 }
 
-.franja:hover:not(:disabled) { background: #f3f1ea; }
+.franja:hover:not(:disabled) {
+  background: #f3f1ea;
+}
 
 .franja.elegida {
   background: none;
@@ -242,7 +295,10 @@ button.enlace:hover:not(:disabled) { background: none; }
   margin-bottom: 32px;
 }
 
-.confirmacion h2 { margin: 0 0 8px; color: #14442f; }
+.confirmacion h2 {
+  margin: 0 0 8px;
+  color: #14442f;
+}
 
 h2 {
   font-family: var(--serif);
@@ -262,15 +318,29 @@ h2 {
   font-size: 15px;
 }
 
-.dato .clave { color: var(--gris); }
+.dato .clave {
+  color: var(--gris);
+}
 
-.vacio { color: var(--gris); font-size: 15px; padding: 20px 0; }
+.vacio {
+  color: var(--gris);
+  font-size: 15px;
+  padding: 20px 0;
+}
 
 @media (max-width: 720px) {
-  .reserva { grid-template-columns: 1fr; gap: 32px; }
-  .hoja { margin: 32px auto; }
+  .reserva {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .hoja {
+    margin: 32px auto;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
 }

@@ -41,8 +41,12 @@ describe("AgendaYA - M04 Booking: reserva con errores", () => {
     cy.get('[data-cy="slot-1500"]').should("be.disabled").and("contain", "reservado");
     cy.get('[data-cy="booking-confirmation"]').should("not.be.visible");
     cy.get('[data-cy="submit-booking"]').should("be.enabled");
-    cy.request("/api/reservas").its("body").should("have.length", 1)
-      .its(0).its("email").should("eq", "otro@ejemplo.com");
+    cy.request("/api/reservas")
+      .its("body")
+      .should("have.length", 1)
+      .its(0)
+      .its("email")
+      .should("eq", "otro@ejemplo.com");
   });
 
   it("no envia la reserva si falta el correo y resalta el campo", () => {

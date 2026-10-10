@@ -196,12 +196,7 @@
 
         if (ok) {
           document.querySelector('[data-cy="booking-detalle"]').textContent =
-            datos.reserva.nombre +
-            ", te esperamos el " +
-            datos.reserva.fecha +
-            " a las " +
-            datos.reserva.hora +
-            " h.";
+            AgendaReservas.textoConfirmacion(datos.reserva);
           document.querySelector('[data-cy="booking-codigo"]').textContent = "#" + datos.reserva.id;
           document.querySelector('[data-cy="booking-confirmation"]').hidden = false;
           boton.textContent = "Reserva confirmada";

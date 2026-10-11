@@ -40,13 +40,6 @@
   const PATRON_HORA = /^([01]\d|2[0-3]):([0-5]\d)$/;
   const PATRON_FECHA = /^(\d{4})-(\d{2})-(\d{2})$/;
   const MS_POR_HORA = 60 * 60 * 1000;
-  const MS_POR_MINUTO = 60 * 1000;
-
-  /**
-   * Desfase de la agenda respecto de UTC. La agenda del administrador esta en
-   * hora de Mendoza: UTC-3 todo el anio (Argentina no usa horario de verano).
-   */
-  const DESFASE_AGENDA = "-03:00";
 
   // ------------------------------------------------------------ fechas y horas
 
@@ -184,34 +177,22 @@
     return null;
   }
 
-  /** Hora "HH:MM" de un instante. */
-  function horaDe(instante) {
-    return (
-      String(instante.getHours()).padStart(2, "0") + ":" + String(instante.getMinutes()).padStart(2, "0")
-    );
-  }
-
   /**
    * Texto con el que se le confirma la reserva al invitado, con el horario de
    * inicio y de fin del turno:
    *
    *   "Juan Perez, te esperamos el 2026-10-13 de 10:00 a 11:00 h."
    *
-   * El fin se calcula sumando la duracion del turno al instante de inicio.
+   * El horario es el de la agenda, tal como lo eligio el invitado, y el fin se
+   * calcula sumando minutos. No se usa Date: getHours() y getMinutes() responden
+   * segun la zona horaria del dispositivo, y un invitado en otra zona veia el
+   * turno corrido (INC-0452).
    */
   function textoConfirmacion(reserva, duracionMin) {
     const duracion = duracionMin || DISPONIBILIDAD.duracionMin;
-    const inicio = new Date(reserva.fecha + "T" + reserva.hora + ":00" + DESFASE_AGENDA);
-    const fin = new Date(inicio.getTime() + duracion * MS_POR_MINUTO);
+    const fin = aHora(aMinutos(reserva.hora) + duracion);
     return (
-      reserva.nombre +
-      ", te esperamos el " +
-      reserva.fecha +
-      " de " +
-      horaDe(inicio) +
-      " a " +
-      horaDe(fin) +
-      " h."
+      reserva.nombre + ", te esperamos el " + reserva.fecha + " de " + reserva.hora + " a " + fin + " h."
     );
   }
 
